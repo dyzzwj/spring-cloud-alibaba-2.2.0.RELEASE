@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 public class NacosConfigManager {
 
 	private static final Logger log = LoggerFactory.getLogger(NacosConfigManager.class);
+
 	// 单例ConfigService
 	private static ConfigService service = null;
 

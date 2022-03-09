@@ -27,12 +27,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- *  向Application容器中注入了4个Bean
+ * 向Application容器中注入了4个Bean
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(name = "spring.cloud.nacos.config.enabled", matchIfMissing = true)
 public class NacosConfigAutoConfiguration {
-
 
 	@Bean
 	public NacosConfigProperties nacosConfigProperties(ApplicationContext context) {

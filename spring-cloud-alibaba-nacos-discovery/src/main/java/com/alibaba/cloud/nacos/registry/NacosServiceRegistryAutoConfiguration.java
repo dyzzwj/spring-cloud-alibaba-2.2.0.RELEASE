@@ -45,12 +45,16 @@ import org.springframework.context.annotation.Configuration;
 		NacosDiscoveryAutoConfiguration.class })
 public class NacosServiceRegistryAutoConfiguration {
 
+
+
+	//nacos服务注册
 	@Bean
 	public NacosServiceRegistry nacosServiceRegistry(
 			NacosDiscoveryProperties nacosDiscoveryProperties) {
 		return new NacosServiceRegistry(nacosDiscoveryProperties);
 	}
 
+	//封装服务注册配置信息和上下文
 	@Bean
 	@ConditionalOnBean(AutoServiceRegistrationProperties.class)
 	public NacosRegistration nacosRegistration(
@@ -59,6 +63,10 @@ public class NacosServiceRegistryAutoConfiguration {
 		return new NacosRegistration(nacosDiscoveryProperties, context);
 	}
 
+
+
+	//构造器传入的就是上面注入的NacosServiceRegistry
+	//整合springcloud common，监听WebServerInitializedEvent事件
 	@Bean
 	@ConditionalOnBean(AutoServiceRegistrationProperties.class)
 	public NacosAutoServiceRegistration nacosAutoServiceRegistration(

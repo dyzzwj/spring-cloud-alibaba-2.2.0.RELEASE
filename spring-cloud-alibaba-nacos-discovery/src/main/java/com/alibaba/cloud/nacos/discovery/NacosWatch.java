@@ -97,6 +97,7 @@ public class NacosWatch implements ApplicationEventPublisherAware, SmartLifecycl
 
 	@Override
 	public void start() {
+		//启动定时任务
 		if (this.running.compareAndSet(false, true)) {
 			this.watchFuture = this.taskScheduler.scheduleWithFixedDelay(
 					this::nacosServicesWatch, this.properties.getWatchDelay());
@@ -120,6 +121,7 @@ public class NacosWatch implements ApplicationEventPublisherAware, SmartLifecycl
 		return 0;
 	}
 
+	//发布HeartbeatEvent事件
 	public void nacosServicesWatch() {
 
 		// nacos doesn't support watch now , publish an event every 30 seconds.

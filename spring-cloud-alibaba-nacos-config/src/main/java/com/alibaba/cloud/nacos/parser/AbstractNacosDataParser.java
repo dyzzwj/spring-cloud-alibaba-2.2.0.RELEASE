@@ -76,12 +76,14 @@ public abstract class AbstractNacosDataParser {
 		if (extension == null || extension.length() < 1) {
 			throw new IllegalStateException("The file extension cannot be empty");
 		}
+		// 判断解析器是否支持解析当前格式的配置
 		if (this.isLegal(extension.toLowerCase())) {
 			return this.doParse(data);
 		}
 		if (this.nextParser == null) {
 			throw new IllegalStateException(getTips(extension));
 		}
+		// 调用下一个解析器
 		return this.nextParser.parseNacosData(data, extension);
 	}
 

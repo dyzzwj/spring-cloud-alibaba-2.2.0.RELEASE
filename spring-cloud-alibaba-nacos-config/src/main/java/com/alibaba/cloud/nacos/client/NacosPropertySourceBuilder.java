@@ -71,10 +71,14 @@ public class NacosPropertySourceBuilder {
 	 */
 	NacosPropertySource build(String dataId, String group, String fileExtension,
 			boolean isRefreshable) {
+		// 1. 调用ConfigService读取远程配置
 		Map<String, Object> p = loadNacosData(dataId, group, fileExtension);
+		// 2. 封装为NacosPropertySource
 		NacosPropertySource nacosPropertySource = new NacosPropertySource(group, dataId,
 				p, new Date(), isRefreshable);
+		// 3. 将配置缓存到NacosPropertySourceRepository
 		NacosPropertySourceRepository.collectNacosPropertySource(nacosPropertySource);
+		// 4. 返回给外部，加入Environment
 		return nacosPropertySource;
 	}
 
@@ -82,7 +86,7 @@ public class NacosPropertySourceBuilder {
 			String fileExtension) {
 		String data = null;
 		try {
-			//1、获取远程配置信息
+			// 1、获取远程配置信息
 			data = configService.getConfig(dataId, group, timeout);
 			if (StringUtils.isEmpty(data)) {
 				log.warn(
@@ -95,7 +99,7 @@ public class NacosPropertySourceBuilder {
 						"Loading nacos data, dataId: '%s', group: '%s', data: %s", dataId,
 						group, data));
 			}
-			//2、解析远程配置信息
+			// 2、解析远程配置信息
 			Map<String, Object> dataMap = NacosDataParserHandler.getInstance()
 					.parseNacosData(data, fileExtension);
 			return dataMap == null ? EMPTY_MAP : dataMap;

@@ -39,6 +39,8 @@ public class NacosRibbonClientConfiguration {
 	@Autowired
 	private PropertiesFactory propertiesFactory;
 
+
+	//整合ribbon的ServerList组件
 	@Bean
 	@ConditionalOnMissingBean
 	public ServerList<?> ribbonServerList(IClientConfig config,
@@ -48,6 +50,7 @@ public class NacosRibbonClientConfiguration {
 					config.getClientName());
 			return serverList;
 		}
+		//基于NamingService做服务发现
 		NacosServerList serverList = new NacosServerList(nacosDiscoveryProperties);
 		serverList.initWithNiwsConfig(config);
 		return serverList;

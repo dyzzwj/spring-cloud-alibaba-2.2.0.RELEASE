@@ -40,7 +40,7 @@ import org.springframework.context.ApplicationListener;
 
 /**
  *
- *  负责向Nacos注册配置监听和处理配置变更，利用SpringBoot的ApplicationReadyEvent事件钩子，触发注册配置监听逻辑
+ * 负责向Nacos注册配置监听和处理配置变更，利用SpringBoot的ApplicationReadyEvent事件钩子，触发注册配置监听逻辑
  *
  * @author juven.xuxb
  * @author pbting
@@ -94,7 +94,7 @@ public class NacosContextRefresher
 	public void onApplicationEvent(ApplicationReadyEvent event) {
 		// many Spring context
 		if (this.ready.compareAndSet(false, true)) {
-			//注册监听
+			// 注册监听 监听
 			this.registerNacosListenersForApplications();
 		}
 	}
@@ -108,7 +108,9 @@ public class NacosContextRefresher
 	 * register Nacos Listeners.
 	 */
 	private void registerNacosListenersForApplications() {
+		// spring.cloud.nacos.config.isRefreshEnabled总控开关默认开启
 		if (isRefreshEnabled()) {
+			// 从缓存中获取所有Nacos配置
 			for (NacosPropertySource propertySource : NacosPropertySourceRepository
 					.getAll()) {
 				if (!propertySource.isRefreshable()) {
@@ -129,6 +131,13 @@ public class NacosContextRefresher
 							String configInfo) {
 						refreshCountIncrement();
 						nacosRefreshHistory.addRefreshRecord(dataId, group, configInfo);
+
+						/**
+						 *  发布RefreshEvent事件 RefreshEventListener 监听该时间
+						 * spring-cloud-starter-alibaba-nacos-config必须配合RefreshScope一同使用才能实现配置动态更新，
+						 * 并且一个配置文件的更新会导致所有RefreshScope里的Bean重新实例化，暂时还不支持单个配置文件的刷新。
+						 */
+
 						// todo feature: support single refresh for listening
 						applicationContext.publishEvent(
 								new RefreshEvent(this, null, "Refresh Nacos config"));

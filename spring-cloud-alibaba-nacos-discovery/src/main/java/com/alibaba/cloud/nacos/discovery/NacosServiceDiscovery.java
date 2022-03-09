@@ -60,6 +60,7 @@ public class NacosServiceDiscovery {
 	 */
 	public List<String> getServices() throws NacosException {
 		String group = discoveryProperties.getGroup();
+		//NamingService
 		ListView<String> services = discoveryProperties.namingServiceInstance()
 				.getServicesOfServer(1, Integer.MAX_VALUE, group);
 		return services.getData();

@@ -46,12 +46,17 @@ import org.springframework.scheduling.TaskScheduler;
 @AutoConfigureAfter(NacosDiscoveryAutoConfiguration.class)
 public class NacosDiscoveryClientConfiguration {
 
+
+
+	//naocs服务发现客户端
 	@Bean
 	public DiscoveryClient nacosDiscoveryClient(
 			NacosServiceDiscovery nacosServiceDiscovery) {
 		return new NacosDiscoveryClient(nacosServiceDiscovery);
 	}
 
+
+	//实现LifeCycle接口 spring启动过程中会回调
 	@Bean
 	@ConditionalOnMissingBean
 	@ConditionalOnProperty(value = "spring.cloud.nacos.discovery.watch.enabled",

@@ -84,33 +84,29 @@ public class NacosConfigProperties {
 	private String encode;
 
 	/**
-	 *  分组
-	 * nacos config group, group is config data meta info.
+	 * 分组 nacos config group, group is config data meta info.
 	 */
 	private String group = "DEFAULT_GROUP";
 
-	/**    见NacosPropertySourceLocator#locate()
-	 *    application配置：对应Nacos的dataId = {prefix}-{spring.profiles.active}.{file-extension}。
-	 *    对于prefix前缀，优先级 prefix > name > spring.application.name。
-	 *    应用配置内部也有优先级，从低到高：
+	/**
+	 * 见NacosPropertySourceLocator#locate() application配置：对应Nacos的dataId =
+	 * {prefix}-{spring.profiles.active}.{file-extension}。 对于prefix前缀，优先级 prefix > name >
+	 * spring.application.name。 应用配置内部也有优先级，从低到高：
 	 *
 	 *
 	 *
-	 * {prefix}-{spring.profiles.active}.{file-extension}
-	 * {prefix}.{file-extension}
+	 * {prefix}-{spring.profiles.active}.{file-extension} {prefix}.{file-extension}
 	 * {prefix}
 	 *
 	 *
-	 * sharedConfigs：共享配置。
-	 * extensionConfigs：扩展配置。
-	 * 三种配置优先级：share < extension < application
+	 * sharedConfigs：共享配置。 extensionConfigs：扩展配置。 三种配置优先级：share < extension < application
 	 */
 	private String prefix;
 
 	/**
 	 *
-	 *  // 配置文件扩展名
-	 * the suffix of nacos config dataId, also the file extension of config content.
+	 * // 配置文件扩展名 the suffix of nacos config dataId, also the file extension of config
+	 * content.
 	 */
 	private String fileExtension = "properties";
 
@@ -151,8 +147,7 @@ public class NacosConfigProperties {
 
 	/**
 	 *
-	 *  // 命名空间
-	 * namespace, separation configuration of different environments.
+	 * // 命名空间 namespace, separation configuration of different environments.
 	 */
 	private String namespace;
 
@@ -183,22 +178,20 @@ public class NacosConfigProperties {
 
 	/**
 	 *
-	 *  共享配置
-	 * a set of shared configurations .e.g:
+	 * 共享配置 a set of shared configurations .e.g:
 	 * spring.cloud.nacos.config.shared-configs[0]=xxx .
 	 */
 	private List<Config> sharedConfigs;
 
 	/**
-	 *  扩展配制
-	 * a set of extensional configurations .e.g:
+	 * 扩展配制 a set of extensional configurations .e.g:
 	 * spring.cloud.nacos.config.extension-configs[0]=xxx .
 	 */
 	private List<Config> extensionConfigs;
 
 	/**
-	 *  总控配置是否可以刷新，shareConfigs和extensionConfigs内部可以定义自己的刷新机制。
-	 * the master switch for refresh configuration, it default opened(true).
+	 * 总控配置是否可以刷新，shareConfigs和extensionConfigs内部可以定义自己的刷新机制。 the master switch for
+	 * refresh configuration, it default opened(true).
 	 */
 	private boolean refreshEnabled = true;
 
@@ -237,8 +230,6 @@ public class NacosConfigProperties {
 			this.setServerAddr(serverAddr);
 		}
 	}
-
-
 
 	// todo sts support
 

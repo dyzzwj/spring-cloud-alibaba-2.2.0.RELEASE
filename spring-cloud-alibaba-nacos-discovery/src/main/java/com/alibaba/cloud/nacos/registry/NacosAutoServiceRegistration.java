@@ -64,6 +64,9 @@ public class NacosAutoServiceRegistration
 		return null;
 	}
 
+
+
+	//服务注册
 	@Override
 	protected void register() {
 		if (!this.registration.getNacosDiscoveryProperties().isRegisterEnabled()) {
@@ -73,6 +76,7 @@ public class NacosAutoServiceRegistration
 		if (this.registration.getPort() < 0) {
 			this.registration.setPort(getPort().get());
 		}
+		//最后调用到NacosServiceRegistry.register
 		super.register();
 	}
 

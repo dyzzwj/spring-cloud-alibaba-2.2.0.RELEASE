@@ -32,6 +32,8 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnNacosDiscoveryEnabled
 public class NacosDiscoveryAutoConfiguration {
 
+
+	//注入spring.cloud.nacos.discovery配置
 	@Bean
 	@ConditionalOnMissingBean
 	public NacosDiscoveryProperties nacosProperties() {

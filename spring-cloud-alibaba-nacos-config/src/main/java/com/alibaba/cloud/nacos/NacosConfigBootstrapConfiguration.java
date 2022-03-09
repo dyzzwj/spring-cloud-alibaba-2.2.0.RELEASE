@@ -31,16 +31,12 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnProperty(name = "spring.cloud.nacos.config.enabled", matchIfMissing = true)
 public class NacosConfigBootstrapConfiguration {
 
-
-
-
 	// spring.cloud.nacos.config配置
 	@Bean
 	@ConditionalOnMissingBean
 	public NacosConfigProperties nacosConfigProperties() {
 		return new NacosConfigProperties();
 	}
-
 
 	// 管理ConfigService
 	@Bean
@@ -49,7 +45,6 @@ public class NacosConfigBootstrapConfiguration {
 			NacosConfigProperties nacosConfigProperties) {
 		return new NacosConfigManager(nacosConfigProperties);
 	}
-
 
 	// PropertySourceBootstrapConfiguration会加载NacosPropertySourceLocator提供的配置
 	@Bean

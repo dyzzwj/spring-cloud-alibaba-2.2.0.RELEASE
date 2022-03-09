@@ -72,10 +72,11 @@ public class NacosPropertySourceLocator implements PropertySourceLocator {
 		this.nacosConfigProperties = nacosConfigManager.getNacosConfigProperties();
 	}
 
-
+	// 处理优先级关系
 	@Override
 	public PropertySource<?> locate(Environment env) {
 		nacosConfigProperties.setEnvironment(env);
+		// 1. 获取Nacos配置管理核心API ConfigService
 		ConfigService configService = nacosConfigManager.getConfigService();
 
 		if (null == configService) {
@@ -83,10 +84,13 @@ public class NacosPropertySourceLocator implements PropertySourceLocator {
 			return null;
 		}
 		long timeout = nacosConfigProperties.getTimeout();
+		// 2. 构造Nacos配置Builder 真正读取配置
 		nacosPropertySourceBuilder = new NacosPropertySourceBuilder(configService,
 				timeout);
 		String name = nacosConfigProperties.getName();
 
+		// 3. dataId前缀按照优先级获取
+		// prefix > name > spring.application.name
 		String dataIdPrefix = nacosConfigProperties.getPrefix();
 		if (StringUtils.isEmpty(dataIdPrefix)) {
 			dataIdPrefix = name;
@@ -99,12 +103,12 @@ public class NacosPropertySourceLocator implements PropertySourceLocator {
 		CompositePropertySource composite = new CompositePropertySource(
 				NACOS_PROPERTY_SOURCE_NAME);
 
-		//加载共享配置
+		// 加载共享配置
 		loadSharedConfiguration(composite);
-		//加载扩展配制
+		// 加载扩展配制
 		loadExtConfiguration(composite);
-		//加载应用配置
-		//先加载的优先级低，会被覆盖
+		// 加载应用配置
+		// 先加载的优先级低，会被覆盖
 		loadApplicationConfiguration(composite, dataIdPrefix, nacosConfigProperties, env);
 
 		return composite;
@@ -144,7 +148,7 @@ public class NacosPropertySourceLocator implements PropertySourceLocator {
 		String fileExtension = properties.getFileExtension();
 		String nacosGroup = properties.getGroup();
 		// load directly once by default
-		//第一次加载 : 默认情况下直接加载一次
+		// 第一次加载 : 默认情况下直接加载一次
 		loadNacosDataIfPresent(compositePropertySource, dataIdPrefix, nacosGroup,
 				fileExtension, true);
 		// load with suffix, which have a higher priority than the default
@@ -197,7 +201,7 @@ public class NacosPropertySourceLocator implements PropertySourceLocator {
 		if (null == group || group.trim().length() < 1) {
 			return;
 		}
-		//加载
+		// 加载
 		NacosPropertySource propertySource = this.loadNacosPropertySource(dataId, group,
 				fileExtension, isRefreshable);
 		this.addFirstPropertySource(composite, propertySource, false);
@@ -211,7 +215,7 @@ public class NacosPropertySourceLocator implements PropertySourceLocator {
 						group);
 			}
 		}
-		//加载
+		// 加载
 		return nacosPropertySourceBuilder.build(dataId, group, fileExtension,
 				isRefreshable);
 	}

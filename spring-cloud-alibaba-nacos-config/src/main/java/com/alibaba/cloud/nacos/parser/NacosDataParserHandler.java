@@ -40,6 +40,7 @@ public final class NacosDataParserHandler {
 	public Map<String, Object> parseNacosData(String data, String extension)
 			throws IOException {
 		if (null == parser) {
+			// 创建解析器链
 			parser = this.createParser();
 		}
 		return parser.parseNacosData(data, extension);
