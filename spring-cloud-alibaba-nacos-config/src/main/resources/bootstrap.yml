@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: nacos-config-example
+  profiles:
+    active: DEV
+---
+spring:
+  profiles: DEV
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        namespace: 789b5be0-0286-4cda-ac0c-e63f5bae3652
+        group: DEFAULT_GROUP
+        extension-configs:
+          - data_id: arch.properties
+            group: arch
+            refresh: true
+          - data_id: jdbc.properties
+            group: data
+            refresh: false
+        shared-configs:
+          - data_id: share.properties
+            group: DEFAULT_GROUP
+            refresh: true
