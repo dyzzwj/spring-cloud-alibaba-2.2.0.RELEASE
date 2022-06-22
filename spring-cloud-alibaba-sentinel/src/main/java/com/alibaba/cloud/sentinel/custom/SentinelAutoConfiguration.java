@@ -137,6 +137,11 @@ public class SentinelAutoConfiguration {
 
 	}
 
+
+	/**
+	 * 注解声明资源的方式
+	 * @return
+	 */
 	@Bean
 	@ConditionalOnMissingBean
 	public SentinelResourceAspect sentinelResourceAspect() {
